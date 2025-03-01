@@ -38,9 +38,9 @@
         padding: 30px;
         display: flex;
         flex-wrap: wrap;
-        justify-content: center; /* Căn giữa theo chiều ngang */
-        align-items: center; /* Căn giữa theo chiều dọc */
-        width: 100%; /* Chiếm toàn bộ chiều rộng */
+        justify-content: center;
+        align-items: center;
+        width: 100%;
         gap: 10px;
         margin: 0 auto;
         text-align: center;
@@ -58,10 +58,10 @@
         margin-top: 30px;
         display: flex;
         align-items: center;
-        justify-content: center; /* Căn giữa theo chiều ngang */
+        justify-content: center;
         gap: 20px;
         text-align: center;
-        flex-wrap: wrap; /* Đảm bảo không bị vỡ layout trên màn hình nhỏ */
+        flex-wrap: wrap;
       }
       .package-title {
         margin-top: -70px;
@@ -89,32 +89,27 @@
         font-weight: bold;
         color: red;
       }
-
       .package-detailing {
-        text-align: left; /* Đảm bảo text bên trong căn trái */
-        max-width: 500px; /* Giới hạn chiều rộng để không bị quá rộng */
+        text-align: left;
+        max-width: 500px;
       }
-
       .notes-section {
         margin-left: -19%;
         display: flex;
-        align-items: flex-start; /* Căn trên cùng */
-        gap: 10px; /* Khoảng cách giữa phần title và nội dung */
+        align-items: flex-start;
+        gap: 10px;
       }
-
       .notes-title {
         font-weight: bold;
         color: red;
-        min-width: 80px; /* Đặt chiều rộng tối thiểu để căn thẳng */
+        min-width: 80px;
         text-align: left;
       }
-
       .notes-content {
         display: flex;
         flex-direction: column;
-        gap: 5px; /* Khoảng cách giữa các dòng */
+        gap: 5px;
       }
-
       @media screen and (max-width: 1200px) {
         .package-title {
           font-size: 100px;
@@ -124,7 +119,6 @@
           font-size: 18px;
         }
       }
-
       @media screen and (max-width: 992px) {
         .package-title {
           font-size: 80px;
@@ -134,7 +128,6 @@
           font-size: 16px;
         }
       }
-
       @media screen and (max-width: 768px) {
         .package-title {
           font-size: 60px;
@@ -144,61 +137,51 @@
           font-size: 14px;
         }
       }
-
       @media screen and (max-width: 576px) {
         .container {
-          padding: 20px; /* Giảm padding để phù hợp với màn hình nhỏ */
+          padding: 20px;
         }
-
         .category-menu {
-          font-size: 14px; /* Giảm kích thước chữ để không bị chồng lên nhau */
+          font-size: 14px;
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
           gap: 5px;
         }
-
         .package-info {
-          flex-direction: column; /* Xếp dọc thay vì xếp ngang */
+          flex-direction: column;
           text-align: center;
         }
-
         .package-title {
-          font-size: 35px; /* Giảm kích thước chữ */
+          font-size: 35px;
           line-height: 30px;
           margin-top: 10px;
         }
-
         .package-details {
-          font-size: 12px; /* Giảm kích thước chữ để vừa với màn hình */
+          font-size: 12px;
         }
-
         .notes-section {
-          flex-direction: column; /* Xếp dọc thay vì ngang */
-          align-items: flex-start; /* Căn trái nội dung */
+          flex-direction: column;
+          align-items: flex-start;
           text-align: left;
           margin-left: 0;
         }
-
         .notes-title {
           font-size: 14px;
-          min-width: auto; /* Loại bỏ min-width để phù hợp hơn */
-          display: block; /* Hiển thị như một block để tránh tràn */
+          min-width: auto;
+          display: block;
         }
-
         .notes-content {
           font-size: 12px;
         }
-
         .photo-gallery {
           display: flex;
-          justify-content: center; /* Căn giữa ảnh */
-          align-items: center; /* Đảm bảo ảnh nằm chính giữa */
-          text-align: center; /* Căn giữa nội dung */
+          justify-content: center;
+          align-items: center;
+          text-align: center;
         }
-
         .photo-frame {
-          max-width: 100%; /* Đảm bảo ảnh không bị tràn */
+          max-width: 100%;
           height: auto;
           margin-left: -60px;
         }
@@ -218,16 +201,7 @@
       </div>
 
       <div class="photo-gallery">
-        <% let singlePackage = packages.find(pkg => pkg.category === "Single");
-        %> <% if (singlePackage) { %>
-        <img
-          src="<%= singlePackage.url %>"
-          class="photo-frame"
-          alt="<%= singlePackage.title %>"
-        />
-        <% } else { %>
-        <p>No image available for Single category</p>
-        <% } %>
+        <!-- Images will be dynamically inserted here -->
       </div>
 
       <div class="package-info">
@@ -248,70 +222,52 @@
         </div>
       </div>
     </div>
+
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const categoryItems = document.querySelectorAll(".category-item");
         const gallery = document.querySelector(".photo-gallery");
         const packageTitle = document.querySelector(".package-title");
         const packageDetails = document.querySelector(".package-details");
-        const notesSection = document.querySelector(".notes-section");
+        const notesContent = document.querySelector(".notes-content");
 
         const packages = <%- JSON.stringify(packages) %>;
 
         function updateGallery(category) {
-          // Xóa nội dung cũ
-          gallery.innerHTML = "";
-
-          // Tìm package theo category
-          let selectedPackage = packages.find(pkg => pkg.category === category);
+          gallery.innerHTML = ""; // Xóa nội dung hiện tại của gallery
+          const selectedPackage = packages.find(pkg => pkg.category === category);
 
           if (selectedPackage) {
-            gallery.innerHTML = `
-              <img src="${selectedPackage.url}" class="photo-frame" alt="${selectedPackage.title}" />
-            `;
+            // Chuyển url thành mảng, dù là chuỗi đơn hay mảng
+            const urls = Array.isArray(selectedPackage.url) ? selectedPackage.url : [selectedPackage.url];
+
+            if (urls && urls.length > 0) {
+              // Tạo thẻ <img> chỉ cho ảnh đầu tiên
+              const img = document.createElement("img");
+              img.src = urls[0]; // Lấy URL đầu tiên
+              img.classList.add("photo-frame");
+              img.alt = selectedPackage.title || category;
+              img.setAttribute("data-id", selectedPackage.id);
+              gallery.appendChild(img);
+            } else {
+              gallery.innerHTML = `<p>Không có ảnh cho danh mục ${category}</p>`;
+            }
+
+            // Cập nhật tiêu đề
             packageTitle.textContent = selectedPackage.category;
+
+            // Cập nhật chi tiết gói (nếu có)
+            if (selectedPackage.price && selectedPackage.description) {
+              packageDetails.innerHTML = `
+                • ${selectedPackage.price}<br />
+                • ${selectedPackage.description}
+              `;
+            }
+            if (selectedPackage.notes) {
+              notesContent.innerHTML = selectedPackage.notes.map(note => `<p>• ${note}</p>`).join("");
+            }
           } else {
-            gallery.innerHTML = `<p>No image available for ${category} category</p>`;
-          }
-        }
-
-        // Lắng nghe sự kiện click vào category
-        categoryItems.forEach(item => {
-          item.addEventListener("click", function () {
-            // Xóa active class khỏi tất cả
-            categoryItems.forEach(i => i.classList.remove("active"));
-            // Thêm active class vào mục được click
-            this.classList.add("active");
-
-            // Cập nhật gallery theo category
-            updateGallery(this.textContent.trim());
-          });
-        });
-
-        // Hiển thị danh mục mặc định là "Single"
-        updateGallery("Single");
-      });
-    </script>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const categoryItems = document.querySelectorAll(".category-item");
-        const gallery = document.querySelector(".photo-gallery");
-        const packageTitle = document.querySelector(".package-title");
-
-        const packages = <%- JSON.stringify(packages) %>;
-
-        function updateGallery(category) {
-          gallery.innerHTML = "";
-          let selectedPackage = packages.find(pkg => pkg.category === category);
-
-          if (selectedPackage) {
-            gallery.innerHTML = `
-              <img src="${selectedPackage.url}" class="photo-frame" alt="${selectedPackage.title}" data-id="${selectedPackage.id}" />
-            `;
-            packageTitle.textContent = selectedPackage.category;
-          } else {
-            gallery.innerHTML = `<p>No image available for ${category} category</p>`;
+            gallery.innerHTML = `<p>Không tìm thấy gói dịch vụ cho danh mục ${category}</p>`;
           }
         }
 
@@ -323,7 +279,6 @@
           });
         });
 
-        // Xử lý click vào package để mở trang chi tiết
         gallery.addEventListener("click", function (event) {
           const clickedPackage = event.target.closest(".photo-frame");
           if (clickedPackage) {
@@ -334,7 +289,7 @@
           }
         });
 
-        updateGallery("Single"); // Mặc định hiển thị gói "Single"
+        updateGallery("Single"); // Hiển thị danh mục mặc định
       });
     </script>
   </body>

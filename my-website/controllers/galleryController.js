@@ -26,12 +26,18 @@ exports.getGalleryDetail = async (req, res) => {
 
     console.log("Notion Response:", JSON.stringify(response, null, 2));
 
-    // Lấy danh sách ảnh từ Notion, tách thành mảng URL
-    const imageUrls = response.properties?.["Image URL"]?.url
-      ? response.properties["Image URL"].url
-          .split(/[\s|]+/) // Tách bằng khoảng trắng hoặc dấu "|"
-          .filter((url) => url.trim()) // Loại bỏ các chuỗi rỗng
-      : [];
+    // Lấy danh sách file từ "Image URL"
+    const imageFiles = response.properties["Image URL"]?.files || [];
+    const imageUrls = imageFiles
+      .map((file) => {
+        if (file.type === "file") {
+          return file.file?.url || "";
+        } else if (file.type === "external") {
+          return file.external?.url || "";
+        }
+        return "";
+      })
+      .filter((url) => url !== ""); // Lọc bỏ URL rỗng
 
     console.log("Processed Image URLs:", imageUrls);
 

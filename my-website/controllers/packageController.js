@@ -9,25 +9,18 @@ exports.getPackagePage = (req, res) => {
   res.render("package", { title: "Package" });
 };
 
-// Lấy danh sách tất cả các gói chụp ảnh nhưng chỉ lấy ảnh đầu của mỗi gói
-
 exports.getPackages = async (req, res) => {
   try {
-    const packages = await getPackages(); // Gọi một lần để lấy danh sách packages
+    const packages = await getPackages();
 
-    // Lọc ảnh đầu tiên của mỗi gói (nếu có nhiều ảnh)
-    const processedPackages = packages.map(pkg => ({
-      ...pkg,
-      url: pkg.url ? pkg.url.split(/[\s|]+/)[0].trim() : "", // Lấy ảnh đầu tiên
-    }));
+    console.log("Raw Packages Data:", JSON.stringify(packages, null, 2)); // Debug
 
-    res.render("package", { packages: processedPackages });
+    res.render("package", { packages: packages });
   } catch (error) {
     console.error("Error fetching packages:", error);
     res.status(500).send("Lỗi lấy dữ liệu package");
   }
 };
-
 
 exports.getPackageDetail = async (req, res) => {
   const packageId = req.params.id;
@@ -40,12 +33,11 @@ exports.getPackageDetail = async (req, res) => {
 
     console.log("Notion Response:", JSON.stringify(response, null, 2));
 
-    // Lấy danh sách ảnh từ Notion, tách thành mảng URL
-    const imageUrls = response.properties?.["Image URL"]?.url
-      ? response.properties["Image URL"].url
-          .split(/[\s|]+/) // Tách bằng khoảng trắng hoặc dấu "|"
-          .filter((url) => url.trim()) // Loại bỏ các chuỗi rỗng
-      : [];
+    // Kiểm tra và lấy danh sách ảnh từ thuộc tính File & media
+    const imageProperty = response.properties?.["Image URL"]?.files || [];
+    const imageUrls = imageProperty
+      .map((file) => file.file?.url || file.external?.url)
+      .filter(Boolean);
 
     console.log("Processed Image URLs:", imageUrls);
 
