@@ -94,7 +94,7 @@
         max-width: 500px;
       }
       .notes-section {
-        margin-left: -19%;
+        margin-left: -35%;
         display: flex;
         align-items: flex-start;
         gap: 10px;
@@ -203,14 +203,13 @@
       <div class="photo-gallery">
         <!-- Images will be dynamically inserted here -->
       </div>
-
       <div class="package-info">
         <div class="package-title">Single</div>
         <div class="package-detailing">
           <div class="package-details">
-            • 300 AUD<br />
-            • 1 hour shooting<br />
-            • 50+ professionally edited images
+            <div id="price">Price</div>
+            <div id="time">Time</div>
+            <div id="edited_quantity">Professionally edited images</div>
           </div>
           <div class="notes-section">
             <p class="notes-title">Notes:</p>
@@ -224,73 +223,78 @@
     </div>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const categoryItems = document.querySelectorAll(".category-item");
-        const gallery = document.querySelector(".photo-gallery");
-        const packageTitle = document.querySelector(".package-title");
-        const packageDetails = document.querySelector(".package-details");
-        const notesContent = document.querySelector(".notes-content");
+                          document.addEventListener("DOMContentLoaded", function () {
+                            const categoryItems = document.querySelectorAll(".category-item");
+                            const gallery = document.querySelector(".photo-gallery");
+                            const packageTitle = document.querySelector(".package-title");
+                            const packageDetails = document.querySelector(".package-details");
+                            const notesContent = document.querySelector(".notes-content");
 
-        const packages = <%- JSON.stringify(packages) %>;
+                            const packages = <%- JSON.stringify(packages) %>;
 
-        function updateGallery(category) {
-          gallery.innerHTML = ""; // Xóa nội dung hiện tại của gallery
-          const selectedPackage = packages.find(pkg => pkg.category === category);
+                            function updateGallery(category) {
+                  gallery.innerHTML = ""; // Xóa nội dung hiện tại của gallery
+                  const selectedPackage = packages.find(pkg => pkg.category === category);
 
-          if (selectedPackage) {
-            // Chuyển url thành mảng, dù là chuỗi đơn hay mảng
-            const urls = Array.isArray(selectedPackage.url) ? selectedPackage.url : [selectedPackage.url];
+                  if (selectedPackage) {
+                    // Chuyển url thành mảng, dù là chuỗi đơn hay mảng
+                    const urls = Array.isArray(selectedPackage.url) ? selectedPackage.url : [selectedPackage.url];
 
-            if (urls && urls.length > 0) {
-              // Tạo thẻ <img> chỉ cho ảnh đầu tiên
-              const img = document.createElement("img");
-              img.src = urls[0]; // Lấy URL đầu tiên
-              img.classList.add("photo-frame");
-              img.alt = selectedPackage.title || category;
-              img.setAttribute("data-id", selectedPackage.id);
-              gallery.appendChild(img);
-            } else {
-              gallery.innerHTML = `<p>Không có ảnh cho danh mục ${category}</p>`;
-            }
+                    if (urls && urls.length > 0) {
+                      // Tạo thẻ <img> chỉ cho ảnh đầu tiên
+                      const img = document.createElement("img");
+                      img.src = urls[0]; // Lấy URL đầu tiên
+                      img.classList.add("photo-frame");
+                      img.alt = selectedPackage.title || category;
+                      img.setAttribute("data-id", selectedPackage.id);
+                      gallery.appendChild(img);
+                    } else {
+                      gallery.innerHTML = `<p>Không có ảnh cho danh mục ${category}</p>`;
+                    }
 
-            // Cập nhật tiêu đề
-            packageTitle.textContent = selectedPackage.category;
+                    // Cập nhật tiêu đề
+                    packageTitle.textContent = selectedPackage.category;
 
-            // Cập nhật chi tiết gói (nếu có)
-            if (selectedPackage.price && selectedPackage.description) {
-              packageDetails.innerHTML = `
-                • ${selectedPackage.price}<br />
-                • ${selectedPackage.description}
-              `;
-            }
-            if (selectedPackage.notes) {
-              notesContent.innerHTML = selectedPackage.notes.map(note => `<p>• ${note}</p>`).join("");
-            }
-          } else {
-            gallery.innerHTML = `<p>Không tìm thấy gói dịch vụ cho danh mục ${category}</p>`;
-          }
-        }
+                    const priceElement = document.getElementById("price");
+          const timeElement = document.getElementById("time");
+          const editedQuantityElement = document.getElementById("edited_quantity");
 
-        categoryItems.forEach(item => {
-          item.addEventListener("click", function () {
-            categoryItems.forEach(i => i.classList.remove("active"));
-            this.classList.add("active");
-            updateGallery(this.textContent.trim());
-          });
-        });
+                    // Cập nhật thông tin gói
+                    priceElement.textContent = `• ${selectedPackage.price  + " USD" || "N/A"}`;
+                    timeElement.textContent = `• ${selectedPackage.time+" shooting" || "N/A"}`;
+                    editedQuantityElement.textContent = `• ${selectedPackage.edited_quantity+ " professionally edited images" || "N/A"}`;
 
-        gallery.addEventListener("click", function (event) {
-          const clickedPackage = event.target.closest(".photo-frame");
-          if (clickedPackage) {
-            const packageId = clickedPackage.getAttribute("data-id");
-            if (packageId) {
-              window.location.href = `/packages/package-detail/${packageId}`;
-            }
-          }
-        });
+                    // Cập nhật ghi chú (Notes)
+                    notesContent.innerHTML = selectedPackage.notes
+      ? selectedPackage.notes.split("\n").map(note => `<p>• ${note}</p>`).join("")
+      : "<p>No additional notes</p>";
 
-        updateGallery("Single"); // Hiển thị danh mục mặc định
-      });
+                  } else {
+                    gallery.innerHTML = `<p>Không tìm thấy gói dịch vụ cho danh mục ${category}</p>`;
+                  }
+                }
+
+
+                            categoryItems.forEach(item => {
+                              item.addEventListener("click", function () {
+                                categoryItems.forEach(i => i.classList.remove("active"));
+                                this.classList.add("active");
+                                updateGallery(this.textContent.trim());
+                              });
+                            });
+
+                            gallery.addEventListener("click", function (event) {
+                              const clickedPackage = event.target.closest(".photo-frame");
+                              if (clickedPackage) {
+                                const packageId = clickedPackage.getAttribute("data-id");
+                                if (packageId) {
+                                  window.location.href = `/packages/package-detail/${packageId}`;
+                                }
+                              }
+                            });
+
+                            updateGallery("Single"); // Hiển thị danh mục mặc định
+                          });
     </script>
   </body>
   <%- include('partials/footer') %>

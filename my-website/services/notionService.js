@@ -43,6 +43,8 @@ const getPackages = async () => {
       database_id: packageDatabaseId,
     });
 
+    console.log("Raw Packages Dataaaaaaaa:", JSON.stringify(response, null, 2)); // Debug
+
     return response.results.map((page) => {
       // Lấy danh sách file từ "Image URL"
       const imageFiles = page.properties["Image URL"]?.files || [];
@@ -60,15 +62,22 @@ const getPackages = async () => {
       return {
         id: page.id,
         title: page.properties.Title?.title[0]?.text.content || "No Title",
-        url: imageUrls, // Trả về tất cả ảnh dưới dạng mảng chuỗi
+        url: imageUrls.length > 0 ? imageUrls : [""], // Đảm bảo có ít nhất một giá trị
         category: page.properties.Category?.select?.name || "Uncategorized",
-        price: page.properties.Price?.number || 0,
+        price: page.properties.Price?.number || "N/A",
+        time: page.properties.Time?.rich_text[0]?.text.content || "N/A",
+        edited_quantity:
+          page.properties["Professionally edited images"]?.number || "N/A",
         description:
           page.properties.Description?.rich_text[0]?.text.content || "",
+        notes:
+          page.properties.Notes?.rich_text[0]?.text.content || "",
+          
       };
+
     });
   } catch (error) {
-    console.error("Error fetching packages:", error);
+    console.error("Error fetching packages:", error.message);
     return [];
   }
 };
