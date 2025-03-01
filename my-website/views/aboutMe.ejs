@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Allura&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Joan&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Parisienne&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <script src="/js/about.js"></script>
+  <body>
+    <%- include('partials/header') %>
+    <main style="margin-top: 150px;">
+      <h2 class="about-me">
+        Hello !<br />
+        I'm Harry Huy
+      </h2>
+      <div class="content">
+        <div class="text-about">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed urna
+            orci, pretium ac nibh eu, commodo cursus enim. Quisque tortor
+            sapien, ornare id interdum at, pharetra eget erat. Etiam varius orci
+            in nisi accumsan posuere.
+          </p>
+        </div>
+        <div class="photo">
+          <img src="/images/huyy.png" alt="Couple Photo" />
+          <div class="logo-overlay">
+            <div>2groom</div>
+            <div>.art</div>
+          </div>
+        </div>
+
+        <div class="text-about">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed urna
+            orci, pretium ac nibh eu, commodo cursus enim. Quisque tortor
+            sapien, ornare id interdum at, pharetra eget erat. Etiam varius orci
+            in nisi accumsan posuere.
+          </p>
+        </div>
+      </div>
+    </main>
+    <button class="scroll-top" onclick="scrollToTop()">&#9650;</button>
+    <script>
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+
+    <section
+      class="overlay-section"
+      style="margin-top: 150px; margin-bottom: 150px"
+    >
+      <div class="overlay-container">
+        <img
+          src="/images/beee.jpg"
+          alt="Romantic Couple"
+          class="overlay-image"
+          style="margin-top: 100px"
+        />
+        <div class="overlay-text">
+          <h1>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed urna
+            orci, pretium ac nibh eu, commodo cursus enim
+          </h1>
+        </div>
+      </div>
+    </section>
+
+    <section class="slideShow">
+      <div class="slider active">
+        <div class="slideShow-container">
+          <div class="slideShowText">
+            <h1>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+              sagittis odio et justo blandit maximus. Aliquam erat volutpat. Nam
+              id lectus id lectus vehicula faucibus. Praesent accumsan maximus
+              faucibus.
+            </h1>
+          </div>
+          <div class="khung">
+            <img src="/images/khung1.png" alt="khungFull" />
+          </div>
+          <div class="khung2">
+            <img src="/images/khung2.png" alt="khungFull" />
+          </div>
+          <div class="hinh">
+            <img src="/images/gareelley4.jpg" alt="hinhFull" />
+          </div>
+        </div>
+      </div>
+      <div class="slider">
+        <div class="slideShow-container">
+          <div class="slideShowText">
+            <h1>
+              Sed vitae nulla non elit dignissim mollis eget quis magna.
+              Suspendisse mauris mi, ornare in condimentum a, fringilla quis
+              mauris. Integer vitae hendrerit enim. Donec ultricies commodo
+              aliquam.
+            </h1>
+          </div>
+          <div class="khung">
+            <img src="/images/khung1.png" alt="khungFull" />
+          </div>
+          <div class="khung2">
+            <img src="/images/khung2.png" alt="khungFull" />
+          </div>
+          <div class="hinh">
+            <img src="/images/gareelley.jpg" alt="hinhFull" />
+          </div>
+        </div>
+      </div>
+      <div class="slider">
+        <div class="slideShow-container">
+          <div class="slideShowText">
+            <h1>
+              Nam varius ipsum eget nulla porttitor, sed rutrum velit ornare.
+              Nulla leo turpis, condimentum in ultrices malesuada, posuere et
+              libero. Nullam pellentesque risus ligula.
+            </h1>
+          </div>
+          <div class="khung">
+            <img src="/images/khung1.png" alt="khungFull" />
+          </div>
+          <div class="khung2">
+            <img src="/images/khung2.png" alt="khungFull" />
+          </div>
+          <div class="hinh">
+            <img src="/images/gareelley3.jpg" alt="hinhFull" />
+          </div>
+        </div>
+      </div>
+      <div class="slider">
+        <div class="slideShow-container">
+          <div class="slideShowText">
+            <h1>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+              sagittis odio et justo blandit maximus. Aliquam erat volutpat. Nam
+              id lectus id lectus vehicula faucibus. Praesent accumsan maximus
+              faucibus.
+            </h1>
+          </div>
+          <div class="khung">
+            <img src="/images/khung1.png" alt="khungFull" />
+          </div>
+          <div class="khung2">
+            <img src="/images/khung2.png" alt="khungFull" />
+          </div>
+          <div class="hinh">
+            <img src="/images/gareelley2.jpg" alt="hinhFull" />
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+        <!-- Cột bên trái -->
+        <div class="faq-column">
+          <div class="faq-item" onclick="toggleAnswer(this)">
+            <p>Question 1: What’s your real name?</p>
+            <p class="answer">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sagittis odio et justo blandit maximus. Aliquam erat volutpat. Nam id lectus id lectus vehicula faucibus. Praesent accumsan maximus faucibus.</p>
+          </div>
+          <div class="faq-item" onclick="toggleAnswer(this)">
+            <p>Question 3: What’s your real name?</p>
+            <p class="answer">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+              sagittis odio et justo blandit maximus. Aliquam erat volutpat. Nam
+              id lectus id lectus vehicula faucibus. Praesent accumsan maximus
+              faucibus.
+            </p>
+          </div>
+          <div class="faq-item" onclick="toggleAnswer(this)">
+            <p>Question 5: What’s your real name?</p>
+            <p class="answer">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+              sagittis odio et justo blandit maximus. Aliquam erat volutpat. Nam
+              id lectus id lectus vehicula faucibus. Praesent accumsan maximus
+              faucibus.
+            </p>
+          </div>
+          <div class="faq-item" onclick="toggleAnswer(this)">
+            <p>Question 7: What’s your real name?</p>
+            <p class="answer">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+              sagittis odio et justo blandit maximus. Aliquam erat volutpat. Nam
+              id lectus id lectus vehicula faucibus. Praesent accumsan maximus
+              faucibus.
+            </p>
+          </div>
+        </div>
+
+        <!-- Cột bên phải -->
+        <div class="faq-column">
+          <div class="faq-item" onclick="toggleAnswer(this)">
+            <p>Question 2: What’s your real name?</p>
+            <p class="answer">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+              sagittis odio et justo blandit maximus. Aliquam erat volutpat. Nam
+              id lectus id lectus vehicula faucibus. Praesent accumsan maximus
+              faucibus.
+            </p>
+          </div>
+          <div class="faq-item" onclick="toggleAnswer(this)">
+            <p>Question 4: What’s your real name?</p>
+            <p class="answer">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+              sagittis odio et justo blandit maximus. Aliquam erat volutpat. Nam
+              id lectus id lectus vehicula faucibus. Praesent accumsan maximus
+              faucibus.
+            </p>
+          </div>
+          <div class="faq-item" onclick="toggleAnswer(this)">
+            <p>Question 6: What’s your real name?</p>
+            <p class="answer">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+              sagittis odio et justo blandit maximus. Aliquam erat volutpat. Nam
+              id lectus id lectus vehicula faucibus. Praesent accumsan maximus
+              faucibus.
+            </p>
+          </div>
+          <div class="faq-item" onclick="toggleAnswer(this)">
+            <p>Question 8: What’s your real name?</p>
+            <p class="answer">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+              sagittis odio et justo blandit maximus. Aliquam erat volutpat. Nam
+              id lectus id lectus vehicula faucibus. Praesent accumsan maximus
+              faucibus.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        function toggleAnswer(element) {
+          let answer = element.querySelector(".answer");
+          answer.style.display =
+            answer.style.display === "block" ? "none" : "block";
+        }
+      </script>
+    </section>
+  </body>
+
+  <%- include('partials/footer') %>
+</html>

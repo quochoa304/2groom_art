@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gallery</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      .gallery-container {
+        flex-grow: 1;
+      }
+
+      .gallery {
+        font-family: Arial, sans-serif;
+        background-color: #f8f5f0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+      }
+      .sidebar {
+        width: 250px;
+        padding: 20px;
+        background: f8f5f0;
+        border-right: 1.5px solid red;
+        height: 100%;
+      }
+      .category-box {
+        padding: 15px;
+        border: 1px solid #0000005b;
+      }
+      .category-box p {
+        padding-bottom: 10px;
+        border-bottom: 1px solid #0000005b;
+      }
+      .category-box ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .category-box li {
+        padding: 10px;
+        cursor: pointer;
+        text-align: left;
+      }
+      .category-box li:hover {
+        background-color: #f0e6da;
+      }
+      .gallery-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: calc(100vh - 120px);
+        padding: 20px;
+      }
+      .new-page .header {
+        margin-bottom: 0% !important;
+      }
+      .gallery {
+        width: 80%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding-bottom: 30px;
+        margin-top: 15px;
+      }
+      .item {
+        font-size: 14px;
+        width: 450px;
+        height: 420px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        background: #f8f5f0;
+        padding: 10px;
+        border: 1px solid #0000005b;
+      }
+
+      .item img {
+        width: 80%;
+        height: 300px;
+        object-fit: cover;
+        display: block;
+      }
+      .name {
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .location {
+        color: rgb(248, 41, 41);
+        margin-top: 10px;
+      }
+
+      /* Ẩn dropdown trên màn hình lớn */
+      .mobile-dropdown {
+        background: #f8f5f0;
+        display: none;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #0000007c;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          flex-direction: column;
+        }
+
+        /* Ẩn bảng category trên mobile */
+        .sidebar {
+          display: none;
+        }
+
+        /* Giảm kích thước dropdown */
+        .mobile-dropdown {
+          display: block;
+          width: 80%; /* Giảm chiều rộng xuống 80% */
+          max-width: 300px; /* Giới hạn kích thước tối đa */
+          margin: 10px auto; /* Canh giữa */
+          padding: 8px;
+          font-size: 14px; /* Giảm kích thước chữ */
+        }
+
+        /* Điều chỉnh kích thước gallery */
+        .gallery-container {
+          width: 100%;
+        }
+
+        /* Giảm kích thước các item */
+        .gallery {
+          width: 100%;
+          grid-template-columns: 1fr;
+          gap: 10px; /* Giảm khoảng cách */
+        }
+
+        .item {
+          font-size: 14px;
+          width: 350px; /* Độ rộng cố định */
+          margin: 0 auto;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          background: #f8f5f0;
+          padding: 10px;
+          border: 1px solid rgba(0, 0, 0, 0.534);
+        }
+
+        .image-container {
+          width: 100%; /* Chiều rộng đầy đủ của item */
+          height: 250px; /* Chiều cao cố định cho khung ảnh */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden; /* Ẩn phần dư thừa */
+        }
+
+        .image-container img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover; /* Đảm bảo ảnh luôn vừa với khung */
+        }
+
+        /* Đảm bảo text không làm thay đổi item */
+        .name,
+        .location {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 100%;
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 500px) {
+        .item {
+          width: 250px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .gallery {
+          margin-left: -10px;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="new-page">
+    <%- include('partials/header') %>
+    <section class="gallery">
+      <select class="mobile-dropdown" id="categoryDropdown">
+        <option value="all">All</option>
+        <option value="single">Single</option>
+        <option value="couple">Couple</option>
+        <option value="group">Group</option>
+        <option value="family">Family</option>
+        <option value="prewedding">PreWedding</option>
+        <option value="wedding">Wedding</option>
+      </select>
+
+      <div class="sidebar">
+        <div class="category-box">
+          <p><strong>CATEGORY</strong></p>
+          <ul id="categoryList">
+            <li data-category="all">All</li>
+            <li data-category="single">Single</li>
+            <li data-category="couple">Couple</li>
+            <li data-category="group">Group</li>
+            <li data-category="family">Family</li>
+            <li data-category="prewedding">PreWedding</li>
+            <li data-category="wedding">Wedding</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="gallery" id="gallery">
+        <% images.forEach(image => { %>
+        <div class="item">
+          <h3><%= image.title %></h3>
+          <img src="<%= image.url %>" alt="<%= image.title %>" />
+          <p><%= image.description %></p>
+        </div>
+        <% }) %>
+      </div>
+      <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                  const gallery = document.getElementById("gallery");
+                  const categoryList = document.getElementById("categoryList");
+                  const categoryDropdown = document.getElementById("categoryDropdown");
+
+                  const images = <%- JSON.stringify(images) %>;
+
+                  function renderGallery(data) {
+          gallery.innerHTML = "";
+          data.forEach((item) => {
+            const div = document.createElement("div");
+            div.className = `item ${item.category}`;
+            div.innerHTML = `
+              <p class="name">${item.title || "No Title"}</p>
+              <img src="${item.url}" alt="${item.title || "No Title"}" data-id="${item.id}">
+              <p class="description">${item.description || "No Description"}</p>
+            `;
+            gallery.appendChild(div);
+          });
+        }
+
+
+                  // Hiển thị toàn bộ ảnh ban đầu
+                  renderGallery(images);
+
+                  // Xử lý click vào category list (desktop)
+                  categoryList.addEventListener("click", function (e) {
+                    if (e.target.tagName === "LI") {
+                      let category = e.target.getAttribute("data-category");
+                      let filteredData = category === "all" ? images : images.filter(item => item.category.toLowerCase() === category);
+                      renderGallery(filteredData);
+                    }
+                  });
+
+                  // Xử lý chọn dropdown (mobile)
+                  categoryDropdown.addEventListener("change", function () {
+                    let category = this.value;
+                    let filteredData = category === "all" ? images : images.filter(item => item.category.toLowerCase() === category);
+                    renderGallery(filteredData);
+                  });
+                });
+      </script>
+
+      <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle"></h2>
+        <!-- Tiêu đề -->
+        <img class="modal-content" id="modalImage" />
+        <p id="modalDescription"></p>
+        <!-- Mô tả -->
+        <button class="prev" onclick="prevImage()">&#10094;</button>
+        <button class="next" onclick="nextImage()">&#10095;</button>
+      </div>
+
+      <style>
+        /* Style cho modal */
+        .modal {
+          display: none;
+          position: fixed;
+          z-index: 1000;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.8);
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        }
+
+        /* Style cho ảnh trong modal */
+        .modal-content {
+          max-width: 80%;
+          max-height: 80%;
+          border-radius: 10px;
+        }
+
+        /* Nút đóng modal */
+        .close {
+          position: absolute;
+          top: 10px;
+          right: 20px;
+          font-size: 30px;
+          color: white;
+          cursor: pointer;
+        }
+
+        /* Nút chuyển ảnh */
+        .prev,
+        .next {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background-color: rgba(255, 255, 255, 0.5);
+          color: black;
+          border: none;
+          padding: 10px 15px;
+          font-size: 24px;
+          cursor: pointer;
+          border-radius: 5px;
+        }
+
+        .prev {
+          left: 10px;
+        }
+        .next {
+          right: 10px;
+        }
+
+        .prev:hover,
+        .next:hover {
+          background-color: rgba(255, 255, 255, 0.8);
+        }
+      </style>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const gallery = document.getElementById("gallery");
+          const modal = document.getElementById("imageModal");
+          const modalImage = document.getElementById("modalImage");
+          let currentIndex = 0;
+          let imageList = []; // Danh sách ảnh từ API
+
+          // Mở modal khi click vào ảnh trong gallery
+          gallery.addEventListener("click", async function (e) {
+            if (e.target.tagName === "IMG") {
+              const imageId = e.target.getAttribute("data-id");
+
+              try {
+                const response = await fetch(`/api/notion-images/${imageId}`);
+                const data = await response.json();
+                console.log(data);
+
+                imageList = data.url.split(/\s+/).filter(Boolean); // Tách URL thành mảng ảnh, chỉ dùng khoảng trắng
+                currentIndex = 0; // Reset về ảnh đầu tiên
+                openModal(currentIndex, data);
+              } catch (error) {
+                console.error("Error fetching image details:", error);
+              }
+            }
+          });
+
+          function openModal(index, data) {
+            if (imageList.length === 0) return;
+
+            modal.style.display = "flex";
+            modalImage.src = imageList[index];
+
+            // Nếu có dữ liệu từ API, cập nhật title & description
+            document.getElementById("modalTitle").textContent =
+              data?.title || "No Title";
+            document.getElementById("modalDescription").textContent =
+              data?.description || "No Description";
+          }
+
+          window.closeModal = function () {
+            modal.style.display = "none";
+          };
+
+          window.nextImage = function () {
+            if (imageList.length === 0) return;
+            currentIndex = (currentIndex + 1) % imageList.length;
+            modalImage.src = imageList[currentIndex];
+          };
+
+          window.prevImage = function () {
+            if (imageList.length === 0) return;
+            currentIndex =
+              (currentIndex - 1 + imageList.length) % imageList.length;
+            modalImage.src = imageList[currentIndex];
+          };
+
+          modal.addEventListener("click", function (e) {
+            if (e.target === modal) {
+              closeModal();
+            }
+          });
+        });
+      </script>
+    </section>
+    <%- include('partials/footer') %>
+  </body>
+</html>

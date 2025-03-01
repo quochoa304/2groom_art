@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photography Package</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Kolker+Brush&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #fdf8f3;
+      }
+      .container {
+        margin: auto;
+        padding: 50px;
+        display: block;
+        margin-bottom: 200px;
+      }
+      .category-menu {
+        font-size: 18px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .category-item {
+        margin: 0 10px;
+        cursor: pointer;
+        opacity: 0.7;
+      }
+      .category-item.active {
+        color: red;
+        font-weight: bold;
+        opacity: 1;
+      }
+      .photo-gallery {
+        padding: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; /* Căn giữa theo chiều ngang */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        width: 100%; /* Chiếm toàn bộ chiều rộng */
+        gap: 10px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .photo-frame {
+        width: 100%;
+        height: auto;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s;
+      }
+      .photo-frame:hover {
+        transform: rotate(0deg) scale(1.02);
+      }
+      .package-info {
+        margin-top: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Căn giữa theo chiều ngang */
+        gap: 20px;
+        text-align: center;
+        flex-wrap: wrap; /* Đảm bảo không bị vỡ layout trên màn hình nhỏ */
+      }
+      .package-title {
+        margin-top: -70px;
+        font-family: "Kolker Brush", cursive;
+        font-weight: 400;
+        font-size: 128px;
+        line-height: 60px;
+        letter-spacing: 0px;
+        color: red;
+      }
+      .package-details {
+        font-family: "Joan", serif;
+        font-size: 20px;
+        line-height: 1.6;
+      }
+      .notes-section {
+        font-size: 16px;
+        color: black;
+        margin-top: 10px;
+      }
+      .notes-section p {
+        margin: 5px 0;
+      }
+      .notes-title {
+        font-weight: bold;
+        color: red;
+      }
+
+      .package-detailing {
+        text-align: left; /* Đảm bảo text bên trong căn trái */
+        max-width: 500px; /* Giới hạn chiều rộng để không bị quá rộng */
+      }
+
+      .notes-section {
+        margin-left: -19%;
+        display: flex;
+        align-items: flex-start; /* Căn trên cùng */
+        gap: 10px; /* Khoảng cách giữa phần title và nội dung */
+      }
+
+      .notes-title {
+        font-weight: bold;
+        color: red;
+        min-width: 80px; /* Đặt chiều rộng tối thiểu để căn thẳng */
+        text-align: left;
+      }
+
+      .notes-content {
+        display: flex;
+        flex-direction: column;
+        gap: 5px; /* Khoảng cách giữa các dòng */
+      }
+
+      @media screen and (max-width: 1200px) {
+        .package-title {
+          font-size: 100px;
+          line-height: 50px;
+        }
+        .package-details {
+          font-size: 18px;
+        }
+      }
+
+      @media screen and (max-width: 992px) {
+        .package-title {
+          font-size: 80px;
+          line-height: 45px;
+        }
+        .package-details {
+          font-size: 16px;
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+        .package-title {
+          font-size: 60px;
+          line-height: 40px;
+        }
+        .package-details {
+          font-size: 14px;
+        }
+      }
+
+      @media screen and (max-width: 576px) {
+        .container {
+          padding: 20px; /* Giảm padding để phù hợp với màn hình nhỏ */
+        }
+
+        .category-menu {
+          font-size: 14px; /* Giảm kích thước chữ để không bị chồng lên nhau */
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 5px;
+        }
+
+        .package-info {
+          flex-direction: column; /* Xếp dọc thay vì xếp ngang */
+          text-align: center;
+        }
+
+        .package-title {
+          font-size: 35px; /* Giảm kích thước chữ */
+          line-height: 30px;
+          margin-top: 10px;
+        }
+
+        .package-details {
+          font-size: 12px; /* Giảm kích thước chữ để vừa với màn hình */
+        }
+
+        .notes-section {
+          flex-direction: column; /* Xếp dọc thay vì ngang */
+          align-items: flex-start; /* Căn trái nội dung */
+          text-align: left;
+          margin-left: 0;
+        }
+
+        .notes-title {
+          font-size: 14px;
+          min-width: auto; /* Loại bỏ min-width để phù hợp hơn */
+          display: block; /* Hiển thị như một block để tránh tràn */
+        }
+
+        .notes-content {
+          font-size: 12px;
+        }
+
+        .photo-gallery {
+          display: flex;
+          justify-content: center; /* Căn giữa ảnh */
+          align-items: center; /* Đảm bảo ảnh nằm chính giữa */
+          text-align: center; /* Căn giữa nội dung */
+        }
+
+        .photo-frame {
+          max-width: 100%; /* Đảm bảo ảnh không bị tràn */
+          height: auto;
+          margin-left: -60px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('partials/header') %>
+    <div class="container">
+      <div class="category-menu">
+        <span class="category-item active">Single</span>
+        <span class="category-item">Couple</span>
+        <span class="category-item">Group</span>
+        <span class="category-item">Family</span>
+        <span class="category-item">PreWedding</span>
+        <span class="category-item">Wedding</span>
+      </div>
+
+      <div class="photo-gallery">
+        <% let singlePackage = packages.find(pkg => pkg.category === "Single");
+        %> <% if (singlePackage) { %>
+        <img
+          src="<%= singlePackage.url %>"
+          class="photo-frame"
+          alt="<%= singlePackage.title %>"
+        />
+        <% } else { %>
+        <p>No image available for Single category</p>
+        <% } %>
+      </div>
+
+      <div class="package-info">
+        <div class="package-title">Single</div>
+        <div class="package-detailing">
+          <div class="package-details">
+            • 300 AUD<br />
+            • 1 hour shooting<br />
+            • 50+ professionally edited images
+          </div>
+          <div class="notes-section">
+            <p class="notes-title">Notes:</p>
+            <div class="notes-content">
+              <p>• All locations are outdoor</p>
+              <p>• All photos are shared on Google Drive within a week</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const categoryItems = document.querySelectorAll(".category-item");
+        const gallery = document.querySelector(".photo-gallery");
+        const packageTitle = document.querySelector(".package-title");
+        const packageDetails = document.querySelector(".package-details");
+        const notesSection = document.querySelector(".notes-section");
+
+        const packages = <%- JSON.stringify(packages) %>;
+
+        function updateGallery(category) {
+          // Xóa nội dung cũ
+          gallery.innerHTML = "";
+
+          // Tìm package theo category
+          let selectedPackage = packages.find(pkg => pkg.category === category);
+
+          if (selectedPackage) {
+            gallery.innerHTML = `
+              <img src="${selectedPackage.url}" class="photo-frame" alt="${selectedPackage.title}" />
+            `;
+            packageTitle.textContent = selectedPackage.category;
+          } else {
+            gallery.innerHTML = `<p>No image available for ${category} category</p>`;
+          }
+        }
+
+        // Lắng nghe sự kiện click vào category
+        categoryItems.forEach(item => {
+          item.addEventListener("click", function () {
+            // Xóa active class khỏi tất cả
+            categoryItems.forEach(i => i.classList.remove("active"));
+            // Thêm active class vào mục được click
+            this.classList.add("active");
+
+            // Cập nhật gallery theo category
+            updateGallery(this.textContent.trim());
+          });
+        });
+
+        // Hiển thị danh mục mặc định là "Single"
+        updateGallery("Single");
+      });
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const categoryItems = document.querySelectorAll(".category-item");
+        const gallery = document.querySelector(".photo-gallery");
+        const packageTitle = document.querySelector(".package-title");
+
+        const packages = <%- JSON.stringify(packages) %>;
+
+        function updateGallery(category) {
+          gallery.innerHTML = "";
+          let selectedPackage = packages.find(pkg => pkg.category === category);
+
+          if (selectedPackage) {
+            gallery.innerHTML = `
+              <img src="${selectedPackage.url}" class="photo-frame" alt="${selectedPackage.title}" data-id="${selectedPackage.id}" />
+            `;
+            packageTitle.textContent = selectedPackage.category;
+          } else {
+            gallery.innerHTML = `<p>No image available for ${category} category</p>`;
+          }
+        }
+
+        categoryItems.forEach(item => {
+          item.addEventListener("click", function () {
+            categoryItems.forEach(i => i.classList.remove("active"));
+            this.classList.add("active");
+            updateGallery(this.textContent.trim());
+          });
+        });
+
+        // Xử lý click vào package để mở trang chi tiết
+        gallery.addEventListener("click", function (event) {
+          const clickedPackage = event.target.closest(".photo-frame");
+          if (clickedPackage) {
+            const packageId = clickedPackage.getAttribute("data-id");
+            if (packageId) {
+              window.location.href = `/packages/package-detail/${packageId}`;
+            }
+          }
+        });
+
+        updateGallery("Single"); // Mặc định hiển thị gói "Single"
+      });
+    </script>
+  </body>
+  <%- include('partials/footer') %>
+</html>
