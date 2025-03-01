@@ -15,32 +15,40 @@ exports.getGallery = async (req, res) => {
   }
 };
 
-// Lấy thông tin ảnh theo ID
-exports.getImageById = async (req, res) => {
-  const imageId = req.params.id;
+exports.getGalleryDetail = async (req, res) => {
+  const galleryId = req.params.id;
 
   try {
-    console.log("Fetching image with ID:", imageId);
+    console.log("Fetching gallery details for ID:", galleryId);
 
-    const response = await notion.pages.retrieve({ page_id: imageId });
+    // Lấy dữ liệu từ Notion
+    const response = await notion.pages.retrieve({ page_id: galleryId });
 
     console.log("Notion Response:", JSON.stringify(response, null, 2));
-    console.log("Notion Response:", response);
 
-    const title =
-      response.properties?.Title?.title?.[0]?.text?.content || "No Title";
-    const description =
-      response.properties?.Description?.rich_text?.[0]?.text?.content ||
-      "No Description";
-
-    // Lấy URL ảnh từ Notion
+    // Lấy danh sách ảnh từ Notion, tách thành mảng URL
     const imageUrls = response.properties?.["Image URL"]?.url
-      ? [response.properties["Image URL"].url]
+      ? response.properties["Image URL"].url
+          .split(/[\s|]+/) // Tách bằng khoảng trắng hoặc dấu "|"
+          .filter((url) => url.trim()) // Loại bỏ các chuỗi rỗng
       : [];
 
-    res.json({ id: imageId, title, description, images: imageUrls });
+    console.log("Processed Image URLs:", imageUrls);
+
+    // Nếu yêu cầu API (JSON), trả về JSON
+    if (req.xhr || req.headers.accept?.includes("application/json")) {
+      return res.json({ id: galleryId, images: imageUrls });
+    }
+
+    // Nếu là request từ trình duyệt, render trang chi tiết
+    res.render("gallery-detail", { galleryId, images: imageUrls });
   } catch (error) {
-    console.error("Error fetching image:", error.message);
-    res.status(500).json({ error: error.message });
+    console.error("Error fetching gallery details:", error.message);
+
+    if (req.xhr || req.headers.accept?.includes("application/json")) {
+      return res.status(500).json({ error: error.message });
+    }
+
+    res.status(500).send("Error loading gallery details.");
   }
 };
